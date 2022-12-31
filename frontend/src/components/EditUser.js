@@ -7,10 +7,10 @@ import { useUserContext } from "../hooks/useUserContext";
 const Edituser = () => {
   const [seletedUser, setSelectedUser] = useState({
     name: "",
-    title: "",
+    title: [],
   });
   // const [name, setName] = useState("");
-  // const [title, setTitle] = useState([]);
+  const [title, setTitle] = useState([]);
 
   const { users, dispatch } = useUserContext();
 
@@ -39,16 +39,16 @@ const Edituser = () => {
   };
 
   const handleOnTitle = (e) => {
-    const { title, value } = e.target;
-    setSelectedUser((seletedUser) => ({
-      ...seletedUser,
-      [title]: value,
+    setTitle(e);
+    setSelectedUser((selectedUser) => ({
+      ...selectedUser,
+      title: [...title],
     }));
   };
 
   const updateUser = async (e) => {
     e.preventDefault();
-    // const user = { name, title };
+
     const response = await fetch("/api/sectors/" + seletedUser._id, {
       method: "PATCH",
       body: JSON.stringify(seletedUser),
@@ -66,6 +66,7 @@ const Edituser = () => {
       // setError(null);
       // console.log("new workout added", json);
       //dispatching update user action with the payload of user input name, title
+
       dispatch({ type: "UPDATE_USER", payload: json });
       navigate("/");
     }
@@ -91,7 +92,9 @@ const Edituser = () => {
         options={options}
         value={seletedUser?.title}
         onChange={handleOnTitle}
+        // onChange={setTitle}
         labelledBy="Select"
+        name="title"
       />
 
       <button type="submit">Save</button>
