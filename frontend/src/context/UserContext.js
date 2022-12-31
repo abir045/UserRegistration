@@ -13,11 +13,17 @@ export const userReducer = (state, action) => {
         users: [...state.users, action.payload],
       };
     case "UPDATE_USER":
+      const updatedUser = action.payload;
       return {
-        users: [action.payload],
+        ...state.users.map((user) =>
+          user._id === updatedUser.id ? updatedUser : user
+        ),
       };
+
     case "DELETE_USER":
       return {
+        //checking the deleted users id against user id's and filtering out that user
+
         users: state.users.filter((u) => u._id !== action.payload._id),
       };
 
@@ -26,9 +32,13 @@ export const userReducer = (state, action) => {
   }
 };
 
+//global user state provider
+
 export const UserContextProvider = ({ children }) => {
+  // access to state and dispatch for calling a reducer action
+  // useReducer takes in the reducer and initial state
   const [state, dispatch] = useReducer(userReducer, {
-    users: [],
+    users: null,
   });
 
   return (

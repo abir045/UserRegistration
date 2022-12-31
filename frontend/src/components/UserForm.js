@@ -4,6 +4,7 @@ import { options } from "../constants/Data";
 import { useUserContext } from "../hooks/useUserContext";
 
 const UserForm = () => {
+  //
   const { dispatch } = useUserContext();
   const [name, setName] = useState("");
   const [title, setTitle] = useState([]);
@@ -34,6 +35,7 @@ const UserForm = () => {
       setTitle("");
       setError(null);
       console.log("new workout added", json);
+      //dispatching add user action with the payload of user input name, title
       dispatch({ type: "CREATE_USER", payload: json });
     }
   };
