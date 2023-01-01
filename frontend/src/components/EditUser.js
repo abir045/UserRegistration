@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MultiSelect } from "react-multi-select-component";
 import { useNavigate, useParams } from "react-router-dom";
 import { options } from "../constants/Data";
@@ -28,7 +28,7 @@ const Edituser = () => {
       setSelectedUser(seletedUser);
     }
     return;
-  }, [id]);
+  }, [id, users]);
 
   const handleOnName = (e) => {
     const { name, value } = e.target;

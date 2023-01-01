@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import UserDetails from "../components/UserDetails";
 import UserForm from "../components/UserForm";
 import { useUserContext } from "../hooks/useUserContext";
 
 export const Home = () => {
-  // const [users, setUsers] = useState(null);
-
   const { users, dispatch } = useUserContext();
 
   useEffect(() => {
@@ -28,6 +26,8 @@ export const Home = () => {
 
       <div className="flex flex-col ml-[5%] mt-[5%] ">
         <h1 className="text-2xl font-bold">List of users</h1>
+        {/* mapping users array and passing user prop to child component */}
+
         {users &&
           users.map((user) => <UserDetails key={user._id} user={user} />)}
       </div>

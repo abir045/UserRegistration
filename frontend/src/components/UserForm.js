@@ -10,6 +10,8 @@ const UserForm = () => {
   const [title, setTitle] = useState([]);
 
   const [error, setError] = useState(null);
+  // empty fields state for form
+  const [emptyFields, setEmptyFields] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,13 +31,17 @@ const UserForm = () => {
 
     if (!response.ok) {
       setError(json.error);
+      // setting empty fields to json.emptyFields array from the backend
+
+      setEmptyFields(json.emptyFields);
     }
     if (response.ok) {
       setName("");
       setTitle("");
       setError(null);
+      setEmptyFields([]);
       console.log("new workout added", json);
-      //dispatching add user action with the payload of user input name, title
+      //dispatching add user action with the payload of user input:  name, title
       dispatch({ type: "CREATE_USER", payload: json });
     }
   };
@@ -52,6 +58,7 @@ const UserForm = () => {
           type="text"
           onChange={(e) => setName(e.target.value)}
           name="name"
+          className={emptyFields && emptyFields.includes("name") ? "error" : ""}
         />
 
         <label>Pick the Sectors</label>
@@ -61,6 +68,9 @@ const UserForm = () => {
           value={title}
           onChange={setTitle}
           labelledBy="Select"
+          className={
+            emptyFields && emptyFields.includes("title") ? "error" : ""
+          }
         />
 
         <button>Save</button>

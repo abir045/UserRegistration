@@ -29,7 +29,24 @@ const getUser = async (req, res) => {
 
 //create new user
 const createUser = async (req, res) => {
+  //destructuring name and title from req.body
   const { name, title } = req.body;
+
+  let emptyFields = [];
+
+  if (!title) {
+    emptyFields.push("title");
+  }
+
+  if (!name) {
+    emptyFields.push("name");
+  }
+
+  if (emptyFields.length > 0) {
+    return res
+      .status(400)
+      .json({ error: "Please fill in all the fields", emptyFields });
+  }
 
   // add doc to db
   try {
